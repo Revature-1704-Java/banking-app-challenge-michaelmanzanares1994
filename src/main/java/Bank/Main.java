@@ -1,14 +1,12 @@
 package Bank;
 
-import java.util.*;
-
 public class Main {
-	
-	public static void main(String[] args) {		
+	public static void main(String[] args) {
+		double runningBalance = 0;
 		Parser parser = new Parser();
-
-		parser.checkUser();
-		parser.displayBalance();
-		parser.chooseFuncitonality();
+		
+		runningBalance = parser.start();
+		parser.chooseFuncitonality(runningBalance);
+		
 	}
 }

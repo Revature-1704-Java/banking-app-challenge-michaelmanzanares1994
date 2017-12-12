@@ -1,1 +1,11 @@
-12345
+acct1: 12345
+acct2: 67890
+
+----UserInfo.txt cp
+user1
+user
+password
+acct1: 12345
+acct2: 67890
+
+user2
