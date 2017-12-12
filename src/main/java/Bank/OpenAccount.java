@@ -2,6 +2,7 @@ package Bank;
 
 abstract class OpenAccount {				//Abstract class
 	abstract void openAccount();
-	abstract void deposit();
-	abstract void withdrawl();
+	abstract double deposit();
+	abstract double withdrawl();
+	abstract boolean exit();
 }
