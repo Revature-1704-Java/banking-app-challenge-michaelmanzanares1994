@@ -2,18 +2,20 @@ package Bank;
 
 import java.util.*;
 import java.io.*;
+import java.text.DecimalFormat;
 
 public class Parser {
 	private Scanner reader;
 	private double accountBalance = 0;
 	private double Balance = 0;
+	private static DecimalFormat decimal = new DecimalFormat(".##");
 	
 	public Parser()	{
 		reader = new Scanner(System.in);
 	}
 
 	public void checkUser() {
-		System.out.println("Hello. Input username and password:\n");
+		System.out.println("Input username and password:\n");
 		String inputName = reader.nextLine();
 		String inputPassword = reader.nextLine();
 
@@ -36,10 +38,9 @@ public class Parser {
 			
 			if(inputName.equals(textUserName) & inputPassword.equals(textPassword)) {		// compare input to text info
 				System.out.println("You logged in!");
-			}
-			else {
-				System.out.println("Incorrect Username or password.");
-				System.exit(0);
+			} else {
+				System.out.println("Incorrect Username or password.\n");
+				exit();
 			}
 		} catch (FileNotFoundException e) {
 			System.out.println("Unable to open file.");
@@ -48,57 +49,84 @@ public class Parser {
 		}
 	}
 	
-	public String getAccount() {
-		System.out.println("Input account number");
-		String acctNum = reader.nextLine();
-		return acctNum;
+	public double displayBalance() {
+		Account account = new Account();
+		String acctNum;
+		double accountNum;
+		double inputNumber;
+		double accountBalance = 0;
+		
+		System.out.println("Input account number: ");
+		acctNum = reader.nextLine();
+		inputNumber = Double.parseDouble(acctNum);
+		
+		if(inputNumber == account.getAccountNumber()) {
+			accountBalance = account.getAccountBalance();
+			return accountBalance;
+		} else {
+			System.out.println("Incorrect account number. Try again.");
+			return inputNumber;								// not what i want
+		}
 	}
 	
 	public void chooseFuncitonality() {
 		if(Balance <= 0) {
-			System.out.println("You're balance is empty!");
-		}
-		System.out.println("What would you like to do? You can: \ndeposit, withdrawl, or exit");
-		String userChoice = reader.nextLine();
+			System.out.println("You can only deposit or exit.");
+			String userChoice = reader.nextLine();
 
-		if(userChoice.equals("deposit")) {
-			Balance += deposit();
-			chooseFuncitonality();
-		} else if(userChoice.equals("withdrawl")) {
-			Balance += withdrawl();
-			chooseFuncitonality();
-		} else if(userChoice.equals("exit")){
-			System.out.println("Your current overall balance is: " + Balance);
-			exit();
+			if(userChoice.equals("deposit")) {
+				Balance = deposit();
+				chooseFuncitonality();
+			} else if(userChoice.equals("exit")){
+				System.out.println("Your current overall balance is: " + decimal.format(Balance) + "\nGoodbye!");
+				exit();
+			} else {
+				System.out.println("That is not a valid command.");
+				chooseFuncitonality();
+			}
 		} else {
-			System.out.println("That is not a valid command.\nGoodbye.");
+			System.out.println("What would you like to do? You can: \ndeposit, withdrawl, or exit");
+			String userChoice = reader.nextLine();
+
+			if(userChoice.equals("deposit")) {
+				Balance = deposit();
+				chooseFuncitonality();
+			} else if(userChoice.equals("withdrawl")) {
+				Balance = withdrawl();
+				chooseFuncitonality();
+			} else if(userChoice.equals("exit")){
+				System.out.println("Your current overall balance is: " + decimal.format(Balance) + "\nGoodbye!");
+				exit();
+			} else {
+				System.out.println("That is not a valid command.\nGoodbye.");
+			}
 		}
 	}
 	
 	public double deposit() {
-		double val;
-		String depositAmount;
+		double depositAmount;
+		String deposit;
+		
 		System.out.println("How much would you like to deposit?\n>");
-		depositAmount = reader.nextLine();
+		deposit = reader.nextLine();
 		
-		val = Double.parseDouble(depositAmount);
+		depositAmount = Double.parseDouble(deposit);
 		
-		accountBalance += val;
-		System.out.println("Account Balance is now: " + accountBalance);
+		accountBalance += depositAmount;
+		System.out.println("Account Balance is now: " + decimal.format(accountBalance));
 		return accountBalance;
 	}
 	
 	public double withdrawl() {
-		double accountBalance = 0;
-		double val;
-		String withdrawlAmount;
+		double withdrawlAmount;
+		String withdrawl;
 		System.out.println("How much would you like to withdrawl?\n>");
-		withdrawlAmount = reader.nextLine();
+		withdrawl = reader.nextLine();
 		
-		val = Double.parseDouble(withdrawlAmount);
+		withdrawlAmount = Double.parseDouble(withdrawl);
 		
-		accountBalance -= val;
-		System.out.println("Account Balance is now: " + accountBalance);
+		accountBalance -= withdrawlAmount;
+		System.out.println("Account Balance is now: " + decimal.format(accountBalance));
 		return accountBalance;
 	}
 	

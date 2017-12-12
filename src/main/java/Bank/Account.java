@@ -1,17 +1,19 @@
 package Bank;
+import java.util.*;
 
 public class Account {
-	private String accountNumber;	// encapsulation
-	public Account() {				// constructor
+	private double accountBalance = 20.00;
+	private int accountNumber = 12345;
+	
+	public Account() {
 		
 	}
-
-	public String setAccount(String accountNumber) {
-		this.accountNumber = accountNumber;
+	
+	public double getAccountNumber() {
 		return accountNumber;
 	}
 	
-	public String getAccount()	{
-		return accountNumber;
+	public double getAccountBalance() {
+		return accountBalance;
 	}
 }
